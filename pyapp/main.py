@@ -6,6 +6,7 @@ import shutil
 
 from PySide6.QtCore import QtMsgType, qInstallMessageHandler
 from PySide6.QtWidgets import QApplication
+from platformdirs import user_data_dir
 
 from .gui.wizard import DkpWizard
 
@@ -48,6 +49,10 @@ def _seed_config_files(target_dir: Path) -> None:
 
 def _resolve_base_dir() -> Path:
     if getattr(sys, "frozen", False):
+        if sys.platform == "darwin":
+            data_dir = Path(user_data_dir("dkp_automator_gui"))
+            _seed_config_files(data_dir)
+            return data_dir
         exe_dir = Path(sys.executable).resolve().parent
         config_dir = exe_dir / "Config files"
         _seed_config_files(config_dir)
