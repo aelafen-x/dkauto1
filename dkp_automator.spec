@@ -51,6 +51,7 @@ if is_darwin:
         name="DKP Automator.app",
     )
     coll = COLLECT(
+        exe,
         app,
         a.binaries,
         a.zipfiles,
