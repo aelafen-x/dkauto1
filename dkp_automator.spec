@@ -46,19 +46,18 @@ exe = EXE(
 )
 
 if is_darwin:
-    app = BUNDLE(
-        exe,
-        name="DKP Automator.app",
-    )
     coll = COLLECT(
         exe,
-        app,
         a.binaries,
         a.zipfiles,
         a.datas,
         strip=False,
         upx=True,
         name="DKP Automator",
+    )
+    app = BUNDLE(
+        coll,
+        name="DKP Automator.app",
     )
 else:
     coll = COLLECT(
