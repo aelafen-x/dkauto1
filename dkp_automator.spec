@@ -1,5 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 from pathlib import Path
+from PyInstaller.compat import is_darwin
 
 block_cipher = None
 
@@ -44,12 +45,27 @@ exe = EXE(
     disable_windowed_traceback=False,
 )
 
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    strip=False,
-    upx=True,
-    name="DKP Automator",
-)
+if is_darwin:
+    app = BUNDLE(
+        exe,
+        name="DKP Automator.app",
+    )
+    coll = COLLECT(
+        app,
+        a.binaries,
+        a.zipfiles,
+        a.datas,
+        strip=False,
+        upx=True,
+        name="DKP Automator",
+    )
+else:
+    coll = COLLECT(
+        exe,
+        a.binaries,
+        a.zipfiles,
+        a.datas,
+        strip=False,
+        upx=True,
+        name="DKP Automator",
+    )
